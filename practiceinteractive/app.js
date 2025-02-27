@@ -11,13 +11,16 @@ function onLoginSubmit(event) {
   event.preventDefault();
   const username = loginInput.value;
   localStorage.setItem(USERNAME_KEY, username);
+  //로컬 스토리지에 key,value 쌍을 세팅해준다 이때 key는 미리 작성해둔 string값을 담은 variable, 값은 element.vlaue
   loginForm.classList.add(HIDDEN_CLASSNAME);
+  //form에 hidden class를 추가해서 form을 숨겨준다
   showGreeting(username, "dark");
+  //showGreeting 함수를 username과 color string과 함께 호출해준다
 }
 
 function showGreeting(username, theme) {
-  greeting.innerText = `welcome ${username}`;
-  greeting.classList.remove(HIDDEN_CLASSNAME);
+  greeting.innerText = `welcome ${username}`; //greeting의 innerText 설정
+  greeting.classList.remove(HIDDEN_CLASSNAME); //greeting hidden className 제거
   if (theme === "dark") {
     greeting.style.color = "white";
     greeting.style.backgroundColor = "black";
@@ -38,16 +41,16 @@ function showGreeting(username, theme) {
 //if 구문과 상관없이 form이 화면에 등장하는데 지금 우린 이걸 제어하고자 하는거라고
 
 const savedUsername = localStorage.getItem(USERNAME_KEY);
-
+//localStorage에서 USERNAME_KEY 값을 불러와 savedUsername에 할당
 if (savedUsername === null) {
   //만약 localStorage에 username이 저장되어있지 않다면 우린 form을 띄워야해
-  loginForm.classList.remove(HIDDEN_CLASSNAME);
-  loginForm.addEventListener("submit", onLoginSubmit);
+  loginForm.classList.remove(HIDDEN_CLASSNAME); //hidden을 제거해 form을 보여주고
+  loginForm.addEventListener("submit", onLoginSubmit); //submit event를 듣고 onLoginSubmit함수를 호출
   //localstorage에서 유저 정보의 유무를 확인한 후에 이벤트리스너를 붙여주고 있어.
   //이 순서에 따르면 가장 먼저 form이 등장하고 유저가 입력한후 제출하면 onLoginSubmit 함수에 따라
   //유저 정보는 localstorage에 저장되고 form은 사라지며 greeting이 유저 정보와 함께 등장하지
 } else {
-  //만약 그렇지 않다면, 즉 username이 이미 존재한다면 우린 greeting을 띄어야지
+  //만약 그렇지 않다면, 즉 username이 이미 존재한다면 우린 바로 greeting을 띄어야지
   showGreeting(savedUsername, "dark");
   //greeting 요소 자체는 등장하겠지만 innerText는 지워졌단 말이야
   //근데 onLoginSubmit에서 우리가 greeting에 넣었던 변수는 함수 내에서 정의했던 변수를 가져다 썼고
